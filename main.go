@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	fmt.Println(hangman.affiche())
+	fmt.Println(hangman.Reader())
 }
