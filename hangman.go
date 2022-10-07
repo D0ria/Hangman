@@ -22,3 +22,12 @@ func Reader() {
 		fmt.Println(err)
 	}
 }
+
+func main() {
+	var solution string
+	// Getting random character
+	mot_a_trouver := solution[rand.Intn(len(solution))]
+
+	// Display the character
+	fmt.Println(string(mot_a_trouver))
+}
