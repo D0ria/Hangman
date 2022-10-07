@@ -1,13 +1,13 @@
-import random
+/*import random
 choix = ["casserole", "cuillere", "patate", "souris"]
 solution = random.choice(choix)
 
-/* test
+test
 solution = "casserole"
 tentatives = 7
 affichage = ""
 lettres_trouvees = ""
-*/
+
 
 for l in solution:
   affichage = affichage + "_ "
@@ -34,7 +34,7 @@ while tentatives > 0:
         print(" ||       /|\ ")
     if tentatives<=4:
         print(" ||       /|  ")
-    if tentatives<=5:                    
+    if tentatives<=5:
         print("/||           ")
     if tentatives<=6:
         print("==============\n")
@@ -49,5 +49,6 @@ while tentatives > 0:
   if "_" not in affichage:
       print(">>> Gagné! <<<")
       break
-     
+
 print("\n    * Fin de la partie *    ")
+*/

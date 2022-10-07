@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	fmt.Println(hangman.Reader())
+	fmt.Println(hangman.mot_random())
 }
