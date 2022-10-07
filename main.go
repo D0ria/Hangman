@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	fmt.Println(hangman.mot_random())
+	fmt.Printf(RevealFewLetters(letter))
 }

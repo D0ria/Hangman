@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"time"
 )
 
 func Reader() {
@@ -23,8 +24,22 @@ func Reader() {
 	}
 }
 
-func Mot_random() {
-	var solution string
-	mot_a_trouver := solution[rand.Intn(len(solution))]
-	fmt.Println(string(mot_a_trouver))
+func Mot_random(i int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(i)
+}
+
+func RevealFewLetters(j string) {
+	for n := 0; n < len(j)-1; n++ {
+		rand.Seed(time.Now().Unix())
+		lettre := j[rand.Intn(len(j))]
+		fmt.Println(lettre)
+	}
+}
+
+type InfosUser struct {
+	LastName  string
+	FirstName string
+	Age       int
+	Luck      int
 }
