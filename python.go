@@ -2,10 +2,12 @@ import random
 choix = ["casserole", "cuillere", "patate", "souris"]
 solution = random.choice(choix)
 
+/* test
 solution = "casserole"
 tentatives = 7
 affichage = ""
 lettres_trouvees = ""
+*/
 
 for l in solution:
   affichage = affichage + "_ "
