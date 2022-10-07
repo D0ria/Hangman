@@ -1,4 +1,5 @@
 package hangman
 
 import (
-	"bufio")
+	"bufio"
+)
