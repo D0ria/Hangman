@@ -16,13 +16,6 @@ type Game struct {
 	Found            bool       //If the letter was found, return true
 }
 
-var hangman Game
-hangman.Word = RandomWord
-hangman.ToFind = HiddenWord
-hangman.Attempts = 3
-hangman.positions = [10]string
-hangman.Found = false
-
 func Reader() {
 	f, err := os.Open("words.txt")
 	if err != nil {
@@ -59,3 +52,86 @@ func HiddenWord(word string) {
 		}
 	}
 }
+
+func Step(tab) 
+
+tab = [
+
+
+
+
+
+=========
+,
+         
+      |  
+      |  
+      |  
+      |  
+      |  
+=========
+,
+  +---+  
+      |  
+      |  
+      |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+      |  
+      |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+      |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+  |   |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+ /|   |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+ /|\  |  
+      |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+ /|\  |  
+ /    |  
+      |  
+=========
+,
+  +---+  
+  |   |  
+  O   |  
+ /|\  |  
+ / \  |  
+      |  
+=========
+]
