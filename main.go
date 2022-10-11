@@ -1,18 +1,11 @@
 package hangman
 
-import (
-	"fmt"
-)
-
 func main() {
 
-	var hangman Game
-	hangman.Word = RandomWord
-	hangman.ToFind = HiddenWord
-	hangman.Attempts = 3
-	hangman.positions = Step()
-	hangman.Found = false
-
-	fmt.Printf(RevealFewLetters(letter))
-	fmt.Println(hangman)
+	var morigno Game
+	morigno.Word = RandomWord
+	morigno.ToFind = HiddenWord
+	morigno.Attempts = 3
+	morigno.HangmanPositions = Step()
+	morigno.Found = false
 }
