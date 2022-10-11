@@ -37,6 +37,14 @@ func RandomWord(i int) int {
 	return rand.Intn(i)
 }
 
+func HiddenWord(word string) {
+	for _, letters := range word {
+		if morigno.Found == false {
+			letters += rune(95)
+		}
+	}
+}
+
 func RevealFewLetters(j string) {
 	for n := 0; n < len(j)-1; n++ {
 		rand.Seed(time.Now().Unix())
@@ -45,93 +53,95 @@ func RevealFewLetters(j string) {
 	}
 }
 
-func HiddenWord(word string) {
-	for _, letters := range word {
-		if hangman.Found == false {
-			letters += rune(95)
+func letterInWord(find string, letters []string) bool {
+	for _, letter := range letters {
+		if find == letter {
+			return true
 		}
 	}
+	return false
+	morigno.Attempts -= 1
 }
 
-func Step(tab) 
-
-tab = [
-
-
+func Step(tab) {
+	tab = [
+		
 
 
 
-=========
-,
+	=========
+	,
          
-      |  
-      |  
-      |  
-      |  
-      |  
-=========
-,
-  +---+  
-      |  
-      |  
-      |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-      |  
-      |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
-      |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
-  |   |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
- /|   |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
- /|\  |  
-      |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
- /|\  |  
- /    |  
-      |  
-=========
-,
-  +---+  
-  |   |  
-  O   |  
- /|\  |  
- / \  |  
-      |  
-=========
+	      |  
+    	  |  
+	      |  
+    	  |  
+	      |  
+	 =========
+	,
+	  +---+  
+	      |  
+	      |  
+	      |  
+	      |  
+	      |  
+	=========
+	,
+	  +---+  
+	  |   |  
+	      |  
+	      |  
+	      |  
+	      |  
+	=========
+	,
+ 	  +---+  
+ 	  |   |  
+ 	  O   |  
+	      |  
+          |  
+		  |  
+	=========
+   ,
+	  +---+  
+  	  |   |  
+ 	  O   |  
+ 	  |   |  
+  	      |  
+  	      |  
+	=========
+	,
+	 +---+  	
+	 |   |  
+ 	 O   |  
+ 	/|   |  
+ 	     |  
+ 	     |  
+   =========
+	,
+  	  +---+  
+ 	  |   |  
+      O   |  
+     /|\  |  
+          |  
+ 		  |  
+	=========
+	,
+ 	 +---+  
+ 	 |   |  
+ 	 O   |  
+ 	/|\  |  
+ 	/    |  
+ 	     |  
+	=========
+	,
+  	 +---+  
+  	 |   |  
+  	 O   |  
+ 	/|\  |  
+ 	/ \  |  
+ 	     |  
+	=========
 ]
+
+}
