@@ -13,6 +13,7 @@ type Game struct {
 	ToFind           string     // Final word chosen by the program at the beginning. It is the word to find
 	Attempts         int        // Number of attempts left
 	HangmanPositions [10]string // It can be the array where the positions parsed in "hangman.txt" are stored
+	Found            bool       //If the letter was found, return true
 }
 
 func Reader() {
@@ -31,7 +32,7 @@ func Reader() {
 	}
 }
 
-func Mot_random(i int) int {
+func RandomWord(i int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(i)
 }
@@ -44,6 +45,10 @@ func RevealFewLetters(j string) {
 	}
 }
 
-func HiddenWord() {
-
+func HiddenWord(word string) {
+	for _, letters := range word {
+		if Game.Found == false {
+			letters += rune(95)
+		}
+	}
 }
