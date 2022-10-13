@@ -72,7 +72,10 @@ func letterInWord(find string, letters []string) bool {
 	return false
 }
 
-func Step(tab) {
+func Step() {
+	if morigno.ToFind == 9 {
+		bufio pendu1
+	}
 
 }
 
