@@ -9,11 +9,20 @@ import (
 )
 
 type Game struct {
-	Word             string     // Word composed of '_', ex: H_ll_
-	ToFind           string     // Final word chosen by the program at the beginning. It is the word to find
+	Word             func     // Word composed of '_', ex: H_ll_
+	ToFind           func     // Final word chosen by the program at the beginning. It is the word to find
 	Attempts         int        // Number of attempts left
 	HangmanPositions [10]string // It can be the array where the positions parsed in "hangman.txt" are stored
 	Found            bool       //If the letter was found, return true
+}
+
+func main() {
+	var morigno Game
+	morigno.Word = RandomWord()
+	morigno.ToFind = letterInWord()
+	morigno.Attempts = 3
+	morigno.Found = false
+	morigno.HangmanPositions = "hangman.txt"
 }
 
 func Reader() {
@@ -59,89 +68,18 @@ func letterInWord(find string, letters []string) bool {
 			return true
 		}
 	}
-	return false
 	morigno.Attempts -= 1
+	return false
 }
 
 func Step(tab) {
-	tab = [
-		
 
+}
 
-
-	=========
-	,
-         
-	      |  
-    	  |  
-	      |  
-    	  |  
-	      |  
-	 =========
-	,
-	  +---+  
-	      |  
-	      |  
-	      |  
-	      |  
-	      |  
-	=========
-	,
-	  +---+  
-	  |   |  
-	      |  
-	      |  
-	      |  
-	      |  
-	=========
-	,
- 	  +---+  
- 	  |   |  
- 	  O   |  
-	      |  
-          |  
-		  |  
-	=========
-   ,
-	  +---+  
-  	  |   |  
- 	  O   |  
- 	  |   |  
-  	      |  
-  	      |  
-	=========
-	,
-	 +---+  	
-	 |   |  
- 	 O   |  
- 	/|   |  
- 	     |  
- 	     |  
-   =========
-	,
-  	  +---+  
- 	  |   |  
-      O   |  
-     /|\  |  
-          |  
- 		  |  
-	=========
-	,
- 	 +---+  
- 	 |   |  
- 	 O   |  
- 	/|\  |  
- 	/    |  
- 	     |  
-	=========
-	,
-  	 +---+  
-  	 |   |  
-  	 O   |  
- 	/|\  |  
- 	/ \  |  
- 	     |  
-	=========
-]
-
+func EndOfGame() {
+	if morigno.ToFind == RandomWord {
+		return "Gagné"
+	} if morigno.Attempts == 0 {
+		return "Perdu"
+	}
 }
