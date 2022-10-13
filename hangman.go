@@ -12,18 +12,17 @@ import (
 
 type Game struct {
 	Word             func     // Word composed of '_', ex: H_ll_
-	ToFind           func     // Final word chosen by the program at the beginning. It is the word to find
+	ToFind()         string     // Final word chosen by the program at the beginning. It is the word to find
 	Attempts         int        // Number of attempts left
 	Found            bool       //If the letter was found, return true
 }
 
 func main() {
-	var morigno Game
+	var morigno struct
 	morigno.Word = RandomWord()
-	morigno.ToFind = LetterInWord()
+	morigno.ToFind() = ""
 	morigno.Attempts = 10
 	morigno.Found = false
-	morigno.HangmanPositions = "hangman.txt"
 }
 
 func Reader() {
@@ -74,7 +73,7 @@ func LetterInWord(find string, letters []string) bool {
 }
 
 func Step() {
-	if morigno.ToFind == 9 {
+	if morigno.ToFind() == 9 {
 		content, err := ioutil.ReadFile("pendu1.txt")
      	if err != nil {
           	log.Fatal(err)
@@ -82,7 +81,7 @@ func Step() {
     	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 8 {
+	if morigno.ToFind() == 8 {
 		content, err := ioutil.ReadFile("pendu2.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -90,7 +89,7 @@ func Step() {
     	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 7 {
+	if morigno.ToFind() == 7 {
 		content, err := ioutil.ReadFile("pendu3.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -98,7 +97,7 @@ func Step() {
     	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 6 {
+	if morigno.ToFind() == 6 {
 		content, err := ioutil.ReadFile("pendu4.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -106,7 +105,7 @@ func Step() {
 	 	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 5 {
+	if morigno.ToFind() == 5 {
 		content, err := ioutil.ReadFile("pendu5.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -114,7 +113,7 @@ func Step() {
     	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 4 {
+	if morigno.ToFind() == 4 {
 		content, err := ioutil.ReadFile("pendu6.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -122,7 +121,7 @@ func Step() {
     	fmt.Println(string(content))
 		}
 
-	if morigno.ToFind == 3 {
+	if morigno.ToFind() == 3 {
 		content, err := ioutil.ReadFile("pendu7.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -130,21 +129,21 @@ func Step() {
     	fmt.Println(string(content))
 	}
 
-	if morigno.ToFind == 2 {
+	if morigno.ToFind() == 2 {
 		content, err := ioutil.ReadFile("pendu8.txt")
      	if err != nil {
 			log.Fatal(err)
     	}
     	fmt.Println(string(content))
 	}
-	if morigno.ToFind == 1 {
+	if morigno.ToFind() == 1 {
 		content, err := ioutil.ReadFile("pendu9.txt")
      	if err != nil {
 			log.Fatal(err)
      	}
     	fmt.Println(string(content))
 		}
-	if morigno.ToFind == 0 {
+	if morigno.ToFind() == 0 {
 		content, err := ioutil.ReadFile("pendu10.txt")
      	if err != nil {
 			log.Fatal(err)
@@ -154,7 +153,7 @@ func Step() {
 }
 
 func EndOfGame() {
-	if morigno.ToFind == RandomWord {
+	if morigno.ToFind() == RandomWord {
 		return "Gagné"
 	} if morigno.Attempts == 0 {
 		return "Perdu"
