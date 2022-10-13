@@ -6,6 +6,8 @@ import (
 	"math/rand"
 	"os"
 	"time"
+	"io/ioutil"
+    "log"
 )
 
 type Game struct {
@@ -74,9 +76,95 @@ func letterInWord(find string, letters []string) bool {
 
 func Step() {
 	if morigno.ToFind == 9 {
-		bufio pendu1
-	}
+		content, err := ioutil.ReadFile("pendu1.txt")
 
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 8 {
+		content, err := ioutil.ReadFile("pendu2.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 7 {
+		content, err := ioutil.ReadFile("pendu3.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 6 {
+		content, err := ioutil.ReadFile("pendu4.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 5 {
+		content, err := ioutil.ReadFile("pendu5.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 4 {
+		content, err := ioutil.ReadFile("pendu6.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 3 {
+		content, err := ioutil.ReadFile("pendu7.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 2 {
+		content, err := ioutil.ReadFile("pendu8.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 1 {
+		content, err := ioutil.ReadFile("pendu9.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
+	if morigno.ToFind == 0 {
+		content, err := ioutil.ReadFile("pendu10.txt")
+
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+	}
 }
 
 func EndOfGame() {
