@@ -20,7 +20,7 @@ func main() {
 	var morigno Game
 	morigno.Word = RandomWord()
 	morigno.ToFind = letterInWord()
-	morigno.Attempts = 3
+	morigno.Attempts = 10
 	morigno.Found = false
 	morigno.HangmanPositions = "hangman.txt"
 }
