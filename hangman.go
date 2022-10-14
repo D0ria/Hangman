@@ -3,29 +3,14 @@ package hangman
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"os"
+	"strconv"
 	"time"
-	"io/ioutil"
-    "log"
 )
 
-type Game struct {
-	Word             func     // Word composed of '_', ex: H_ll_
-	ToFind()         string     // Final word chosen by the program at the beginning. It is the word to find
-	Attempts         int        // Number of attempts left
-	Found            bool       //If the letter was found, return true
-}
-
-func main() {
-	var morigno struct
-	morigno.Word = RandomWord()
-	morigno.ToFind() = ""
-	morigno.Attempts = 10
-	morigno.Found = false
-}
-
-func Reader() {
+func Lecture() {
 	f, err := os.Open("words.txt")
 	if err != nil {
 		fmt.Println(err)
@@ -41,121 +26,113 @@ func Reader() {
 	}
 }
 
-func RandomWord(i int) int {
-	rand.Seed(time.Now().Unix())
-	return rand.Intn(i)
+func MotRandom() []string { //fonction qui choisi un mot aléatoire dans une des 3 listes
+	var tableauMot []string
+	min := 1
+	max := 3
+	rand.Seed(time.Now().UnixNano())
+	whichWord := (rand.Intn(max-min+1) + min) //choisi un nombre aléatoire entre 1 et 3( pour les listes de mots )
+	words := "hangman-classic/words" + strconv.Itoa(whichWord) + ".txt"
+	f, err := os.Open(words)
+
+	if err != nil { //gestion de l'erreur
+		fmt.Println("Fichier introuvable")
+		return tableauMot
+	}
+
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+
+	for scanner.Scan() {
+		rand.Seed(time.Now().UnixNano())
+		tableauMot = append(tableauMot, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Fichier introuvable")
+	}
+	return tableauMot
 }
 
-func HiddenWord(word string) {
-	for _, letters := range word {
-		if morigno.Found == false {
-			letters += rune(95)
+func InitTab(motRandom string) []rune { // créer le tableau de réponse avec des lettres déjà mise
+	tabinit := []rune(motRandom)
+	tabreponse := []rune(nil)
+	for i := 0; i < len(tabinit); i++ {
+		tabreponse = append(tabreponse, '_')
+	}
+	indice := (len(tabinit) / 2) - 1
+	for i := 0; i < indice; i++ {
+		rand.Seed(time.Now().UnixNano())
+		position := rand.Intn(len(tabinit))
+		letter := tabinit[position]
+		tabreponse[position] = letter
+		for j := 0; j < len(tabinit); j++ {
+			if letter == tabinit[j] {
+				tabreponse[j] = letter
+			}
 		}
 	}
+	return tabreponse
 }
 
-func RevealFewLetters(j string) {
-	for n := 0; n < len(j)-1; n++ {
-		rand.Seed(time.Now().Unix())
-		lettre := j[rand.Intn(len(j))]
-		fmt.Println(lettre)
-	}
-}
-
-func LetterInWord(find string, letters []string) bool {
-	for _, letter := range letters {
-		if find == letter {
+func Compare(Lettre string, InitTab []rune, Reponsetab []rune) bool {
+	TabRune := []rune(Lettre)
+	for i := 0; i < len(InitTab); i++ {
+		if TabRune[0] == InitTab[i] {
 			return true
 		}
 	}
-	morigno.Attempts -= 1
 	return false
 }
 
-func Step() {
-	if morigno.ToFind() == 9 {
-		content, err := ioutil.ReadFile("pendu1.txt")
-     	if err != nil {
-          	log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
+func EntrerLettre(Lettre string) bool { // fonction qui demande une lettre au joueur et la vérifie
+	SpecialCar := []string{"é", "è", "ê", "à", "â", "-", "ù", "û", "ç"}
+	for i := 0; i < len(SpecialCar); i++ {
+		if Lettre == SpecialCar[i] {
+			return true
 		}
-
-	if morigno.ToFind() == 8 {
-		content, err := ioutil.ReadFile("pendu2.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
-		}
-
-	if morigno.ToFind() == 7 {
-		content, err := ioutil.ReadFile("pendu3.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
-		}
-
-	if morigno.ToFind() == 6 {
-		content, err := ioutil.ReadFile("pendu4.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-	 	fmt.Println(string(content))
-		}
-
-	if morigno.ToFind() == 5 {
-		content, err := ioutil.ReadFile("pendu5.txt")
-     	if err != nil {
-			log.Fatal(err)
-    	}
-    	fmt.Println(string(content))
-		}
-
-	if morigno.ToFind() == 4 {
-		content, err := ioutil.ReadFile("pendu6.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
-		}
-
-	if morigno.ToFind() == 3 {
-		content, err := ioutil.ReadFile("pendu7.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
 	}
-
-	if morigno.ToFind() == 2 {
-		content, err := ioutil.ReadFile("pendu8.txt")
-     	if err != nil {
-			log.Fatal(err)
-    	}
-    	fmt.Println(string(content))
+	TabRuneLettre := []rune(Lettre)
+	if TabRuneLettre[0] >= 'a' && TabRuneLettre[0] <= 'z' {
+		TabRuneLettre[0] -= 32
 	}
-	if morigno.ToFind() == 1 {
-		content, err := ioutil.ReadFile("pendu9.txt")
-     	if err != nil {
-			log.Fatal(err)
-     	}
-    	fmt.Println(string(content))
-		}
-	if morigno.ToFind() == 0 {
-		content, err := ioutil.ReadFile("pendu10.txt")
-     	if err != nil {
-			log.Fatal(err)
-    	 }
-    	fmt.Println(string(content))
-		}
+	if TabRuneLettre[0] >= 'A' && TabRuneLettre[0] <= 'Z' {
+		return true
+	} else {
+		return false
+	}
 }
 
-func EndOfGame() {
-	if morigno.ToFind() == RandomWord {
-		return "Gagné"
-	} if morigno.Attempts == 0 {
-		return "Perdu"
+func Etape(tentative int) { //fonction qui affiche la position du pendu par rapport au nombre de vie restante
+	var tabMorigno []byte
+	vie := 10
+	position := vie - tentative
+	content, err := ioutil.ReadFile("hangman.txt")
+
+	if err != nil {
+		fmt.Println("[fichier non trouvé]")
+	} else {
+		for i := 0; i < 71; i++ {
+			tabMorigno = append(tabMorigno, content[i+(71*position)])
+
+		}
+		morigno := (string(tabMorigno))
+		fmt.Println(morigno)
+
 	}
+}
+
+func Rejouer() bool { //fonction pour rejouer ou non
+	var reponse string
+	fmt.Println("Voulez vous rejouer ? O pour rejouer , N pour arreter")
+	fmt.Scan(&reponse)
+	if reponse == "O" {
+		return true
+	} else if reponse == "N" {
+		return false
+	} else {
+		fmt.Println("Veuillez rentrer soit O pour rejouer, soit N pour arreter")
+		fmt.Scan(&reponse)
+	}
+	return false
 }
