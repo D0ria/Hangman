@@ -1,138 +1,116 @@
 package hangman
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
-	"math/rand"
-	"os"
-	"strconv"
-	"time"
+	"log"
 )
 
-func Lecture() {
-	f, err := os.Open("words.txt")
-	if err != nil {
-		fmt.Println(err)
+func Reponse(tabrune []rune, tailletab int) { //fonction qui convertie la réponse (originalement en string) en runes
+	for i := 0; i < tailletab; i++ {
+		fmt.Print(string(tabrune[i]))
 	}
-	defer f.Close()
-	scanner := bufio.NewScanner(f)
-	scanner.Split(bufio.ScanWords)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println(err)
-	}
+	fmt.Print("\n")
 }
 
-func MotRandom() []string { //fonction qui choisi un mot aléatoire dans une des 3 listes
-	var tableauMot []string
-	min := 1
-	max := 3
-	rand.Seed(time.Now().UnixNano())
-	whichWord := (rand.Intn(max-min+1) + min) //choisi un nombre aléatoire entre 1 et 3( pour les listes de mots )
-	words := "hangman-classic/words" + strconv.Itoa(whichWord) + ".txt"
-	f, err := os.Open(words)
-
-	if err != nil { //gestion de l'erreur
-		fmt.Println("Fichier introuvable")
-		return tableauMot
+func CastStringRune(motcache string) []rune { //fonction qui transforme un string en un tableau de runes pour append chaque lettre dans ce tableau
+	var result []rune
+	for i := 0; i < len(motcache); i++ {
+		result = append(result, (rune(motcache[i])))
 	}
-
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-
-	for scanner.Scan() {
-		rand.Seed(time.Now().UnixNano())
-		tableauMot = append(tableauMot, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Fichier introuvable")
-	}
-	return tableauMot
+	return result
 }
 
-func InitTab(motRandom string) []rune { // créer le tableau de réponse avec des lettres déjà mise
-	tabinit := []rune(motRandom)
-	tabreponse := []rune(nil)
-	for i := 0; i < len(tabinit); i++ {
-		tabreponse = append(tabreponse, '_')
-	}
-	indice := (len(tabinit) / 2) - 1
-	for i := 0; i < indice; i++ {
-		rand.Seed(time.Now().UnixNano())
-		position := rand.Intn(len(tabinit))
-		letter := tabinit[position]
-		tabreponse[position] = letter
-		for j := 0; j < len(tabinit); j++ {
-			if letter == tabinit[j] {
-				tabreponse[j] = letter
-			}
-		}
-	}
-	return tabreponse
-}
-
-func Compare(Lettre string, InitTab []rune, Reponsetab []rune) bool {
-	TabRune := []rune(Lettre)
-	for i := 0; i < len(InitTab); i++ {
-		if TabRune[0] == InitTab[i] {
-			return true
-		}
-	}
-	return false
-}
-
-func EntrerLettre(Lettre string) bool { // fonction qui demande une lettre au joueur et la vérifie
-	SpecialCar := []string{"é", "è", "ê", "à", "â", "-", "ù", "û", "ç"}
-	for i := 0; i < len(SpecialCar); i++ {
-		if Lettre == SpecialCar[i] {
-			return true
-		}
-	}
-	TabRuneLettre := []rune(Lettre)
-	if TabRuneLettre[0] >= 'a' && TabRuneLettre[0] <= 'z' {
-		TabRuneLettre[0] -= 32
-	}
-	if TabRuneLettre[0] >= 'A' && TabRuneLettre[0] <= 'Z' {
-		return true
-	} else {
+func Compare(lettre, reponsetab []rune) bool { //fonction qui compare la lettre entrée par rapport aux lettres dans le mot
+	if len(lettre) != len(reponsetab) {
 		return false
 	}
-}
-
-func Etape(tentative int) { //fonction qui affiche la position du pendu par rapport au nombre de vie restante
-	var tabMorigno []byte
-	vie := 10
-	position := vie - tentative
-	content, err := ioutil.ReadFile("hangman.txt")
-
-	if err != nil {
-		fmt.Println("[fichier non trouvé]")
-	} else {
-		for i := 0; i < 71; i++ {
-			tabMorigno = append(tabMorigno, content[i+(71*position)])
-
+	for i := 0; i < len(lettre); i++ {
+		if lettre[i] != reponsetab[i] {
+			return false
 		}
-		morigno := (string(tabMorigno))
-		fmt.Println(morigno)
-
 	}
+	return true
 }
 
-func Rejouer() bool { //fonction pour rejouer ou non
-	var reponse string
-	fmt.Println("Voulez vous rejouer ? O pour rejouer , N pour arreter")
-	fmt.Scan(&reponse)
-	if reponse == "O" {
-		return true
-	} else if reponse == "N" {
-		return false
-	} else {
-		fmt.Println("Veuillez rentrer soit O pour rejouer, soit N pour arreter")
-		fmt.Scan(&reponse)
+func Etape(vie int) { //fonction qui renvoie chaque étape du pendu si la vie décroît
+	if vie == 9 {
+		content, err := ioutil.ReadFile("pendu1.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
 	}
-	return false
+
+	if vie == 8 {
+		content, err := ioutil.ReadFile("pendu2.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 7 {
+		content, err := ioutil.ReadFile("pendu3.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 6 {
+		content, err := ioutil.ReadFile("pendu4.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 5 {
+		content, err := ioutil.ReadFile("pendu5.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 4 {
+		content, err := ioutil.ReadFile("pendu6.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 3 {
+		content, err := ioutil.ReadFile("pendu7.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 2 {
+		content, err := ioutil.ReadFile("pendu8.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 1 {
+		content, err := ioutil.ReadFile("pendu9.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
+
+	if vie == 0 {
+		content, err := ioutil.ReadFile("pendu10.txt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(content))
+	}
 }
