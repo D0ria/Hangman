@@ -27,11 +27,15 @@ func main() {
 	trouver := tab_mots[nbr_words]                     //mot à trouver
 	trouver_en_rune := hangman.CastStringRune(trouver) //Cast du mot à trouver pour le print
 
+	indice := rand.Intn(len(trouver)) //lettre indice généré de manière aléatoire
+
 	var ok int                          //dira si la lettre est trouvée
 	var deja_trouver []rune             //deja_trouver est le mot caché par des "_" et se modifie en printant la lettre trouvée et ce, jusqu'à ce que l'on gagne
 	for i := 0; i < len(trouver); i++ { //initialisation de deja_trouver
 		deja_trouver = append(deja_trouver, '_')
 	}
+
+	deja_trouver[indice] = rune(trouver[indice]) //révèle une lettre indice aléatoirement.
 
 	hangman.Reponse(deja_trouver, len(trouver))           //fonction qui s'occupe de l'affichage durant le jeu
 	fmt.Println("Bonne chance, vous avez 10 tentatives.") //début du jeu
