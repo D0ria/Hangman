@@ -4,12 +4,21 @@ import (
 	"bufio"
 	"fmt"
 	"hangman"
+	"io/ioutil"
+	"log"
 	"math/rand"
 	"os"
 	"time"
 )
 
 func main() {
+
+	content, err := ioutil.ReadFile("consigne.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(content))
+
 	rand.Seed(time.Now().UnixNano()) // fonction random
 	nbr_words := rand.Intn(85) + 1   // choisit un mot au hasard dans la liste words.txt
 
